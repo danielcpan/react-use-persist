@@ -51,3 +51,8 @@ Persistent State Hooks. Combines the syntax and APIs of `useState` and `useReduc
   - The first two arguments will be identical to those returned by React's `useState` and `useReducer` hooks.
   - A third argument `remove` is provided. Calling `remove` will clear the state **and** the key from the persistent storage.
 
+
+
+## Example
+
+https://codesandbox.io/s/react-use-persist-07elu?file=/src/App.js
