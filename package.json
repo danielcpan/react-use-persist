@@ -44,5 +44,12 @@
     "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-typescript2": "^0.27.1",
     "typescript": "^3.9.7"
-  }
+  },
+  "keywords": [
+    "localStorage",
+    "sessionStorage",
+    "persistState",
+    "react",
+    "hooks"
+  ]
 }
