@@ -18,8 +18,8 @@
     "type": "git",
     "url": "git+https://github.com/danielcpan/react-use-persist.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Daniel Pan <danielcpan.dev@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/danielcpan/react-use-persist/issues"
   },
