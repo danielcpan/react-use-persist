@@ -21,7 +21,7 @@ export const usePersistStateBase = ({ store, key, initialState, options }: TUseP
       setState(valueToStore);
       store.setItem(key, JSON.stringify(valueToStore));
     },
-    [key, setState]
+    [key, state, setState]
   );
 
   const remove = useCallback(() => {
@@ -56,7 +56,7 @@ export const usePersistReducerBase = ({
       setState(value);
       store.setItem(key, JSON.stringify(value));
     },
-    [key, setState]
+    [key, state, setState]
   );
 
   const remove = useCallback(() => {
