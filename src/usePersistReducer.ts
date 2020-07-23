@@ -29,6 +29,8 @@ const usePersistReducer = <S, A>({
   const [state, dispatch] = useReducer(reducer, init);
 
   useEffect(() => {
+    if (state === initialState) return;
+
     storage.setItem(key, serialize(state));
   }, [key, state]);
 
