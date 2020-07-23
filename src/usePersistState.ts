@@ -1,38 +1,45 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { isString, rawFn } from './utils';
 import type { TUsePersist } from './types';
 
 const usePersistState = ({
-  store,
+  storage,
   key,
   initialState,
   options: {
+    isAsync = false,
     raw = false,
-    serialize: serializeFn = JSON.stringify,
-    deserialize: deserializeFn = JSON.parse
+    serializer = JSON.stringify,
+    deserializer = JSON.parse
   } = {}
 }: TUsePersist) => {
   if (!isString(key)) throw new Error('Key must be of type string!');
 
-  const deserialize = useCallback(raw ? rawFn : deserializeFn, [raw, deserializeFn]);
-  const serialize = useCallback(raw ? rawFn : serializeFn, [raw, serializeFn]);
+  const deserialize = useCallback(raw ? rawFn : deserializer, [raw, deserializer]);
+  const serialize = useCallback(raw ? rawFn : serializer, [raw, serializer]);
+  const init = useMemo(() => {
+    if (isAsync) return initialState;
 
-  const [state, setState] = useState(() => {
-    const item = store.getItem(key);
+    const item = storage.getItem(key);
 
     return item ? deserialize(item) : initialState;
-  });
+  }, [key, initialState, deserialize, storage, isAsync]);
+
+  const [state, setState] = useState(init);
 
   useEffect(() => {
-    store.setItem(key, serialize(state));
+    if (!isAsync) return;
+
+    storage.getItem(key).then((value: any) => {
+      setState(value);
+    });
+  }, [key, isAsync]);
+
+  useEffect(() => {
+    storage.setItem(key, serialize(state));
   }, [key, state]);
 
-  const remove = useCallback(() => {
-    setState(undefined);
-    store.removeItem(key);
-  }, [key, setState]);
-
-  return [state, setState, remove];
+  return [state, setState, storage];
 };
 
 export default usePersistState;

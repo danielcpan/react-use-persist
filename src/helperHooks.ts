@@ -1,13 +1,23 @@
 import usePersistState from './usePersistState';
 import usePersistReducer from './usePersistReducer';
+import idb from './idb';
 import type { TOptions } from './types';
 
 export const useLocalState = (key: string, initialState: any, options?: TOptions) => {
-  return usePersistState({ store: window.localStorage, key, initialState, options });
+  return usePersistState({ storage: window.localStorage, key, initialState, options });
 };
 
 export const useSessionState = (key: string, initialState: any, options?: TOptions) => {
-  return usePersistState({ store: window.sessionStorage, key, initialState, options });
+  return usePersistState({ storage: window.sessionStorage, key, initialState, options });
+};
+
+export const useIDBState = (key: string, initialState: any, options?: TOptions) => {
+  return usePersistState({
+    storage: idb,
+    key,
+    initialState,
+    options: { isAsync: true, ...options }
+  });
 };
 
 export const useLocalReducer = (
@@ -16,7 +26,7 @@ export const useLocalReducer = (
   initialState: any,
   options?: TOptions
 ) => {
-  return usePersistReducer({ store: window.localStorage, key, reducer, initialState, options });
+  return usePersistReducer({ storage: window.localStorage, key, reducer, initialState, options });
 };
 
 export const useSessionReducer = (
@@ -25,5 +35,15 @@ export const useSessionReducer = (
   initialState: any,
   options?: TOptions
 ) => {
-  return usePersistReducer({ store: window.sessionStorage, key, reducer, initialState, options });
+  return usePersistReducer({ storage: window.sessionStorage, key, reducer, initialState, options });
+};
+
+export const useIDBReducer = (key: string, reducer: any, initialState: any, options?: TOptions) => {
+  return usePersistReducer({
+    storage: idb,
+    key,
+    reducer,
+    initialState,
+    options: { isAsync: true, ...options }
+  });
 };

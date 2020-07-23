@@ -1,19 +1,30 @@
-export type TStore = {
-  getItem: (key: string) => string | null;
+import { Reducer } from 'react';
+
+export type TStorage = {
+  getItem: (key: string) => any;
   setItem: (key: string, value: string) => void;
   removeItem: (key: string) => void;
 };
 
 export type TOptions = {
+  isAsync?: boolean;
   raw?: boolean;
-  serialize?: (value: any) => string;
-  deserialize?: (value: string) => any;
+  serializer?: (value: any) => string;
+  deserializer?: (value: string) => any;
 };
 
 export type TUsePersist = {
-  store: TStore;
+  storage: TStorage;
   key: string;
-  reducer?: any;
+  reducer?: Reducer<any, any>;
   initialState: any;
+  options?: TOptions;
+};
+
+export type TUsePersistReducer<S, A> = {
+  storage: TStorage;
+  key: string;
+  reducer: Reducer<S, A>;
+  initialState: S;
   options?: TOptions;
 };
