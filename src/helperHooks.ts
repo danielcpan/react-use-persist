@@ -16,7 +16,7 @@ export const useIDBState = (key: string, initialState: any, options?: TOptions) 
     storage: idb,
     key,
     initialState,
-    options: { isAsync: true, ...options }
+    options: { isAsync: true, raw: true, ...options }
   });
 };
 
@@ -44,6 +44,6 @@ export const useIDBReducer = (key: string, reducer: any, initialState: any, opti
     key,
     reducer,
     initialState,
-    options: { isAsync: true, ...options }
+    options: { isAsync: true, raw: true, ...options }
   });
 };
